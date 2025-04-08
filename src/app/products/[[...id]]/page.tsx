@@ -5,10 +5,13 @@ import Head from "next/head";
 import React, { Fragment, useState } from "react";
 import ProductCard from "../ProductCard";
 import SkeletonCard from "../SkeletonCard";
+import { useParams } from "next/navigation";
 
-const ProductsPage = ({ params }: { params: { id: Array<string> } }) => {
+const ProductsPage = () => {
   const [products, setProducts] = useState<Array<DataType> | []>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const params: { id: Array<string> } = useParams();
 
   return (
     <>
