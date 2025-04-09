@@ -4,6 +4,7 @@ import Head from "next/head";
 import React, { CSSProperties, useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -78,9 +79,36 @@ const styles = {
 const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const { push } = useRouter();
 
-  const handleSubmit = async (event: any) => {
+  const handleLogin = async (event: any) => {
+    if (isLoading) return;
+
+    event.preventDefault();
     alert("fitur Sign In belum dibuat!");
+
+    setError("");
+    setIsLoading(true);
+
+    fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: event.currentTarget.email.value,
+        password: event.currentTarget.password.value,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res: any) => {
+        let timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+
+        setError("");
+        push("/");
+      });
   };
 
   const handleSignInWithGoogle = async (event: any) => {
@@ -104,7 +132,7 @@ const LoginPage = () => {
             </>
           )}
 
-          <form onSubmit={handleSubmit} className={inter.className}>
+          <form onSubmit={handleLogin} className={inter.className}>
             <div style={styles.formGroup}>
               <label htmlFor="email" style={styles.label}>
                 Email

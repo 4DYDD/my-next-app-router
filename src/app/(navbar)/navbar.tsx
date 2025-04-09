@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface immitateUser {
   fullname: string;
@@ -15,6 +17,7 @@ const Navbar = () => {
   const status = null;
 
   const pathname = usePathname();
+  const { push } = useRouter();
 
   return (
     <>
@@ -108,6 +111,7 @@ const Navbar = () => {
                   onClick={() => {
                     // signIn();
                     alert("fitur Sign In belum dibuat!");
+                    push("/login");
                   }}
                   className="hover:text-gray-400 transall clicked"
                 >
