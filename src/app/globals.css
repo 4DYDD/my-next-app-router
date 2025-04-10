@@ -225,13 +225,13 @@ body {
 }
 
 .animate-squish {
-  will-change: transform;
+  will-change: transform, opacity;
   animation-name: animate-squish;
   animation-duration: 100ms;
-  animation-fill-mode: forwards;
+  animation-fill-mode: both;
 }
 .animate-squish-barbar {
-  will-change: transform;
+  will-change: transform, opacity;
   animation-name: animate-squish-barbar;
   animation-duration: 150ms;
   animation-fill-mode: both;
@@ -254,6 +254,7 @@ body {
   /* === BIASA AJA === */
   0% {
     transform: scale(0.9, 0.95);
+    opacity: 0;
   }
   25% {
     transform: scale(1.15, 1);
@@ -263,6 +264,7 @@ body {
   }
   100% {
     transform: scale(1, 1);
+    opacity: 1;
   }
 }
 
@@ -271,6 +273,7 @@ body {
   0% {
     transform: scale(0.9, 0.95) skew(0deg, 0deg);
     animation-timing-function: ease-out;
+    opacity: 0;
   }
   25% {
     transform: scale(1.15, 1) skew(-5deg, 0deg);
@@ -291,6 +294,7 @@ body {
   100% {
     transform: scale(1, 1) skew(0deg, 0deg);
     animation-timing-function: ease-out;
+    opacity: 1;
   }
 }
 

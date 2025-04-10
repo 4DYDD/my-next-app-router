@@ -10,21 +10,22 @@ const ProductCard = ({
   className,
 }: {
   value: DataType;
-  index?: number;
+  index: number;
   className?: string;
 }) => {
   return (
     <>
       <Link
         href={`/products/${value.id}`}
-        className="m-3 p-3 flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50"
+        style={{ animationDelay: `${index * 200}ms` }}
+        className={`m-3 p-4 h-[34rem] flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50 ${className}`}
       >
         <li className="flexc w-full mb-5">
-          <div className="flexc w-full overflow-hidden rounded-xl">
+          <div className="flexc h-96 w-full overflow-hidden rounded-xl">
             <Image
               width={592}
               height={592}
-              className="w-full"
+              className="size-full object-cover"
               src={value.image}
               alt={`sepatu-${value.name}`}
             />

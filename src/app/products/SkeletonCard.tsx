@@ -1,9 +1,11 @@
 import React from "react";
 
-const SkeletonCard = () => {
+const SkeletonCard = ({ className }: { className?: string }) => {
   return (
     <>
-      <ul className="m-3 p-3 flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50">
+      <ul
+        className={`m-3 p-3 flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50 ${className}`}
+      >
         <li className=" flexc w-full mb-5">
           <div className="flexc w-full overflow-hidden rounded-xl">
             <div className="bg-primary-variant-50 animate-pulse size-72 xl:size-80 flexc w-full overflow-hidden rounded-xl" />

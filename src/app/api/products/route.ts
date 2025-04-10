@@ -25,6 +25,70 @@ const data: Array<{
     name: "Laptop Acer",
     price: 15_000_000,
   },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1636211990414-8edec17ba047?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Asus 2",
+    price: 12_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1693206578601-21cdc341d2c8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Acer 2",
+    price: 15_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1636211990414-8edec17ba047?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Asus 3",
+    price: 12_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1693206578601-21cdc341d2c8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Acer 3",
+    price: 15_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1636211990414-8edec17ba047?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Asus 4",
+    price: 12_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1693206578601-21cdc341d2c8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Acer 4",
+    price: 15_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1636211990414-8edec17ba047?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    name: "Laptop Asus 5",
+    price: 12_000_000,
+  },
+  {
+    id: (Math.random() + 1).toString(36).substring(7),
+    category: "Elektronik",
+    image:
+      "https://images.unsplash.com/photo-1693206578601-21cdc341d2c8?q=80&w=1973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fA%3D%3D",
+    name: "Laptop Acer 5",
+    price: 15_000_000,
+  },
 ];
 
 export async function GET(request: NextRequest) {

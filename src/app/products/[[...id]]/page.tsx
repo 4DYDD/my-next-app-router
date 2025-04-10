@@ -2,7 +2,7 @@
 
 import { DataType } from "@/types/datatype";
 import Head from "next/head";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 import SkeletonCard from "../SkeletonCard";
 import { useParams } from "next/navigation";
@@ -12,6 +12,29 @@ const ProductsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const params: { id: Array<string> } = useParams();
+
+  useEffect(() => {
+    const fetchProducts = () => {
+      setIsLoading(true);
+      fetch("http://localhost:3000/api/products", {
+        cache: "no-store",
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          if (res.status === 200) {
+            setProducts(res.data);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to fetch products : ", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    };
+
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -35,8 +58,8 @@ const ProductsPage = () => {
       {/*  */}
       {/*  */}
 
-      <div className="container grid md:grid-cols-2 w-[95%] xl:grid-cols-3 overflow-y-auto h-[70vh] scrollbar-custom">
-        {!isLoading && (products ?? []).length > 0
+      <div className="container grid md:grid-cols-2 w-[95%] xl:grid-cols-3 overflow-y-auto overflow-x-hidden h-[70vh] scrollbar-custom">
+        {!isLoading && products.length > 0
           ? products?.map((value, index) => (
               <Fragment key={`product-${index}`}>
                 {/*  */}
@@ -46,7 +69,11 @@ const ProductsPage = () => {
                 {/* ====================== START PRODUCT CARD ====================== */}
                 {/* ================================================================== */}
 
-                <ProductCard value={value} />
+                <ProductCard
+                  className="animate-squish"
+                  value={value}
+                  index={index}
+                />
 
                 {/* ================================================================== */}
                 {/* ======================= END PRODUCT CARD ======================= */}
