@@ -6,37 +6,31 @@ import React, { Fragment, useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 import SkeletonCard from "../SkeletonCard";
 import { useParams } from "next/navigation";
+import { getData } from "@/services/products";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Array<DataType> | []>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<any>("");
 
-  const params: { id: Array<string> } = useParams();
+  const params: { category: Array<string> } = useParams();
 
   useEffect(() => {
-    const fetchProducts = () => {
-      setIsLoading(true);
+    setIsLoading(true);
 
-      fetch("http://localhost:3000/api/products", {
-        cache: "no-store",
+    getData("http://localhost:3000/api/products")
+      .then((res) => {
+        if (res.status === 200) {
+          setProducts(res.data);
+        }
       })
-        .then((response) => response.json())
-        .then((res) => {
-          if (res.status === 200) {
-            setProducts(res.data);
-          }
-        })
-        .catch((error) => {
-          setError(error);
-          console.error("Failed to fetch products : ", error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    };
-
-    fetchProducts();
+      .catch((error) => {
+        setError(error);
+        console.error("Failed to fetch products : ", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   if (error) throw new Error(error);
@@ -110,8 +104,8 @@ const ProductsPage = () => {
             ))}
       </div>
 
-      {params.id && (
-        <div className="mt-5">category : {params.id.join(", ")}</div>
+      {params.category && (
+        <div className="mt-5">category : {params.category.join(", ")}</div>
       )}
     </>
   );

@@ -16,7 +16,7 @@ const ProductCard = ({
   return (
     <>
       <Link
-        href={`/products/${value.id}`}
+        href={`/products/detail/${value.id}`}
         style={{ animationDelay: `${index * 200}ms` }}
         className={`m-3 p-4 h-[30rem] flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50 ${className}`}
       >
