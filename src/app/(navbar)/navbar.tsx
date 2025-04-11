@@ -40,10 +40,10 @@ const Navbar = () => {
           {/* Menu */}
           <ul className="flex space-x-8 mx-2">
             {[
-              { href: "/", text: "Dashboard" },
+              { href: "/", text: "Home" },
               { href: "/products", text: "Store" },
-              { href: "#about", text: "About" },
-              { href: "#contact", text: "Contact" },
+              { href: "/about", text: "About" },
+              { href: "/about/profile", text: "Profile" },
             ].map((value, index) => (
               <li key={index}>
                 <Link

@@ -18,10 +18,10 @@ const ProductCard = ({
       <Link
         href={`/products/${value.id}`}
         style={{ animationDelay: `${index * 200}ms` }}
-        className={`m-3 p-4 h-[34rem] flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50 ${className}`}
+        className={`m-3 p-4 h-[30rem] flex-col flexc gap-1 rounded-xl shadow outline-1 outline-gray-100 bg-primary-50 ${className}`}
       >
         <li className="flexc w-full mb-5">
-          <div className="flexc h-96 w-full overflow-hidden rounded-xl">
+          <div className="flexc h-80 w-full overflow-hidden rounded-xl">
             <Image
               width={592}
               height={592}

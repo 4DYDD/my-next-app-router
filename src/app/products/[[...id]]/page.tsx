@@ -10,12 +10,14 @@ import { useParams } from "next/navigation";
 const ProductsPage = () => {
   const [products, setProducts] = useState<Array<DataType> | []>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<any>("");
 
   const params: { id: Array<string> } = useParams();
 
   useEffect(() => {
     const fetchProducts = () => {
       setIsLoading(true);
+
       fetch("http://localhost:3000/api/products", {
         cache: "no-store",
       })
@@ -26,6 +28,7 @@ const ProductsPage = () => {
           }
         })
         .catch((error) => {
+          setError(error);
           console.error("Failed to fetch products : ", error);
         })
         .finally(() => {
@@ -35,6 +38,8 @@ const ProductsPage = () => {
 
     fetchProducts();
   }, []);
+
+  if (error) throw new Error(error);
 
   return (
     <>
