@@ -6,7 +6,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import ProductCard from "../ProductCard";
 import SkeletonCard from "../SkeletonCard";
 import { useParams } from "next/navigation";
-import { getData } from "@/services/products";
+import { getData } from "@/services/getData";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState<Array<DataType> | []>([]);

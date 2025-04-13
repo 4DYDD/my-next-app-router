@@ -5,6 +5,7 @@ import React, { CSSProperties, useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -85,30 +86,34 @@ const LoginPage = () => {
     if (isLoading) return;
 
     event.preventDefault();
-    alert("fitur Sign In belum dibuat!");
 
     setError("");
     setIsLoading(true);
 
-    fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
         email: event.currentTarget.email.value,
         password: event.currentTarget.password.value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((res: any) => {
-        let timer = setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-
-        setError("");
-        push("/");
+        callbackUrl: "/",
       });
+
+      if (!res?.error) {
+        push("/");
+      } else {
+        console.log(res.error);
+        setError(res.error);
+      }
+
+      setIsLoading(false);
+      //
+      //
+      //
+    } catch (error: any) {
+      console.log(error);
+      setError(error);
+      setIsLoading(false);
+    }
   };
 
   const handleSignInWithGoogle = async (event: any) => {

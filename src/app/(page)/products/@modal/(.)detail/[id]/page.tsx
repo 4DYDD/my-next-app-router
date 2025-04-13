@@ -1,5 +1,5 @@
 import Modal from "@/app/components/fragments/Modal";
-import { getData } from "@/services/products";
+import { getData } from "@/services/getData";
 import { DataType } from "@/types/datatype";
 import { toIndonesiaCurrency } from "@/utils/toIndonesiaCurrency";
 import Image from "next/image";

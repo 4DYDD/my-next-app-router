@@ -4,17 +4,11 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-
-interface immitateUser {
-  fullname: string;
-  image: string;
-  role: string;
-}
+import { signIn, signOut, useSession } from "next-auth/react";
+import { MySession } from "@/interfaces/mySession";
 
 const Navbar = () => {
-  //   const { data, status } = useSession() as Session;
-  const data: { user: immitateUser | null } | any = null;
-  const status = null;
+  const { data, status } = useSession() as MySession;
 
   const pathname = usePathname();
   const { push } = useRouter();
@@ -62,7 +56,7 @@ const Navbar = () => {
             {data ? (
               <li>
                 <div className="hover:text-gray-400 transall clicked flexc">
-                  <div className="flexc gap-3 relative">
+                  <div className="flexc gap-2 relative">
                     <span className="w-8 flexc relative">
                       <Image
                         width={576}
@@ -93,31 +87,62 @@ const Navbar = () => {
             ) : (
               ""
             )}
+
             <li>
-              {status === "loading" ? (
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/* ======================================== JIKA LOADING ======================================== */}
+              {status === "loading" && (
                 <button className="text-gray-400 transall">Loading...</button>
-              ) : data ? (
+              )}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/* ======================================== JIKA TERAUTENTIKASI ======================================== */}
+              {status === "authenticated" && (
                 <button
-                  onClick={() => {
-                    // signOut();
-                    alert("fitur Sign Out belum dibuat!");
-                  }}
+                  onClick={() => signOut()}
                   className="hover:text-gray-400 transall clicked"
                 >
                   Sign Out
                 </button>
-              ) : (
+              )}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/* ======================================== JIKA TIDAK TERAUTENTIKASI ======================================== */}
+              {status === "unauthenticated" && (
                 <button
-                  onClick={() => {
-                    // signIn();
-                    alert("fitur Sign In belum dibuat!");
-                    push("/login");
-                  }}
+                  onClick={() => signIn()}
                   className="hover:text-gray-400 transall clicked"
                 >
                   Sign In
                 </button>
               )}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
+              {/*  */}
             </li>
           </ul>
         </div>

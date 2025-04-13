@@ -1,4 +1,4 @@
-import { getData } from "@/services/products";
+import { getData } from "@/services/getData";
 import { DataType } from "@/types/datatype";
 import Image from "next/image";
 import React from "react";

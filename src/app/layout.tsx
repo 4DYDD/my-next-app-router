@@ -5,8 +5,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Navbar from "./(navbar)/navbar";
 import { usePathname } from "next/navigation";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
+const disableNavbarFooter = ["/login", "/register"];
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -20,13 +22,13 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
 
-  const disableNavbarFooter = ["/login", "/register"];
-
   return (
     <html lang="en">
       <body className={`${inter.className} h-full flexc flex-col w-full`}>
-        {!disableNavbarFooter.includes(pathname) && <Navbar />}
-        {children}
+        <SessionProvider>
+          {!disableNavbarFooter.includes(pathname) && <Navbar />}
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
