@@ -4,6 +4,7 @@ import Head from "next/head";
 import React, { CSSProperties, useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -79,9 +80,35 @@ const RegisterPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const { push } = useRouter();
+
   const handleSubmit = async (event: any) => {
-    alert("fitur Sign Up belum dibuat!");
+    if (isLoading) return;
+    event.preventDefault();
+
+    setIsLoading(true);
+    setError("");
+
+    const res = await fetch("/api/auth/register", {
+      method: "POST",
+      body: JSON.stringify({
+        fullname: event.currentTarget.fullname.value,
+        email: event.currentTarget.email.value,
+        password: event.currentTarget.password.value,
+      }),
+    }).then((response) => response.json());
+
+    if (!res.status) {
+      setError(res.message);
+    } else {
+      event.target.reset();
+      push("/login");
+    }
+
+    setIsLoading(false);
+    console.log(res);
   };
+
   return (
     <>
       <Head>
