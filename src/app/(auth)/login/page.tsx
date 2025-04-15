@@ -77,10 +77,12 @@ const styles = {
   },
 };
 
-const LoginPage = () => {
+const LoginPage = ({ searchParams }: any) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const { push } = useRouter();
+
+  const { callbackUrl }: any = React.use(searchParams);
 
   const handleLogin = async (event: any) => {
     if (isLoading) return;
@@ -95,11 +97,11 @@ const LoginPage = () => {
         redirect: false,
         email: event.currentTarget.email.value,
         password: event.currentTarget.password.value,
-        callbackUrl: "/",
+        callbackUrl,
       });
 
       if (!res?.error) {
-        push("/");
+        push(callbackUrl);
         event.target.reset();
       } else {
         setError("Email or Password is Incorrect");

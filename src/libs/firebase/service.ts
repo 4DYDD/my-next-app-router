@@ -35,35 +35,56 @@ export async function register(data: {
   password: string;
   role?: string;
 }) {
+  //
+  //
+  //
+  // VERIFIKASI FIELDNYA DULU BIAR TIDAK KOSONG
   if (!data.fullname)
     return { status: false, statusCode: 400, message: "Fullname is required" };
   if (!data.email)
     return { status: false, statusCode: 400, message: "Email is required" };
   if (!data.password)
     return { status: false, statusCode: 400, message: "Password is required" };
-
+  //
+  //
+  //
+  // CEK EKSISTENSI USER DI DATABASE FIRESTORE DENGAN EMAIL YANG SAMA DENGAN YANG DIINPUT USER, TAKUTNYA DUPLIKAT
   const q = query(
     collection(firestore, "users"),
     where("email", "==", data.email)
   );
-
   const snapshot = await getDocs(q);
-
   const users = snapshot.docs.map((doc) => ({
     id: doc.id,
     ...doc.data(),
   }));
 
+  //
+  //
+  //
+  // JIKA TERNYATA DUPLIKAT MAKA KEMBALIKAN ERROR
   if (users.length > 0) {
     return { status: false, statusCode: 400, message: "Email already exist" };
-  } else {
+  }
+  //
+  //
+  //
+  // JIKA TIDAK DUPLIKAT MAKA BUAT ROLENYA JADI MEMBER, LALU ENKRIPSI PASSWORDNYA PAKAI BCRYPT
+  else {
     data.role = "member";
     data.password = await hash(data.password, 10);
-
+    //
+    //
+    //
+    // JIKA BERHASIL MAKA SIMPAN DATA DAN KEMBALIKAN SUKSES
     try {
       await addDoc(collection(firestore, "users"), data);
       return { status: true, statusCode: 200, message: "Register Success" };
     } catch (error) {
+      //
+      //
+      //
+      // JIKA GAGAL MAKA KEMBALIKAN ERROR
       return { status: false, statusCode: 400, message: "Register Failed" };
     }
   }

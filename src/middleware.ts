@@ -1,14 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import withAuth from "./middlewares/withAuth";
 
-export function middleware(request: NextRequest) {
-  const isLogin = false;
-
-  if (!isLogin) return NextResponse.redirect(new URL("/login", request.url));
+export function mainMiddleware(request: NextRequest) {
+  // LANJUT AJA
+  return NextResponse.next();
 }
 
-export const config = {
-  matcher: [
-    // "/dashboard/:path*",
-    "/about/:path*",
-  ],
-};
+// WAJIBKAN AUTHENTIKASI DI PATHNAME BERIKUT
+export default withAuth(mainMiddleware, ["/dashboard", "/settings"]);
