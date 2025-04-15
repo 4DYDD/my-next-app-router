@@ -100,18 +100,14 @@ const LoginPage = () => {
 
       if (!res?.error) {
         push("/");
+        event.target.reset();
       } else {
-        console.log(res.error);
-        setError(res.error);
+        setError("Email or Password is Incorrect");
       }
-
-      setIsLoading(false);
-      //
-      //
-      //
     } catch (error: any) {
       console.log(error);
       setError(error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -164,7 +160,7 @@ const LoginPage = () => {
             </div>
             <button
               type="submit"
-              className={inter.className}
+              className={`${isLoading && "!cursor-wait"} ${inter.className}`}
               disabled={isLoading}
               style={{
                 ...styles.button,
@@ -212,7 +208,7 @@ const LoginPage = () => {
           </form>
           <button
             type="button"
-            className={`${inter.className}`}
+            className={`${isLoading && "!cursor-wait"} ${inter.className}`}
             style={{
               ...styles.button,
               backgroundColor: "white",

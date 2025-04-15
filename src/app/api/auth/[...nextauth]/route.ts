@@ -1,3 +1,5 @@
+import { login } from "@/libs/firebase/service";
+import { UserType } from "@/types/usertype";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -21,19 +23,9 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        const user:
-          | Record<"id" | "name" | "email" | "image" | "role", string>
-          | any = {
-          id: "56e6f7a034f9419c", // sha256 of "1"
-          name: "somwan",
-          email: "somwan@gmail.com",
-          image: "https://logodix.com/logo/649370.png",
-          role: "admin",
-        };
+        const user: any = await login({ email, password });
 
-        return email === "somwan@gmail.com" && password === "12345678"
-          ? user
-          : null;
+        return user;
       },
     }),
   ],
@@ -41,7 +33,7 @@ const authOptions: NextAuthOptions = {
     async jwt({ token, account, profile, user }: any) {
       if (account?.provider === "credentials") {
         token.email = user.email;
-        token.name = user.name;
+        token.fullname = user.fullname;
         token.role = user.role;
       }
 
@@ -49,7 +41,7 @@ const authOptions: NextAuthOptions = {
     },
     async session({ session, token }: any) {
       if ("email" in token) session.user.email = token.email;
-      if ("name" in token) session.user.name = token.name;
+      if ("fullname" in token) session.user.fullname = token.fullname;
       if ("role" in token) session.user.role = token.role;
 
       return session;

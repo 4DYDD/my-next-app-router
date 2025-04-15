@@ -98,6 +98,7 @@ const RegisterPage = () => {
       }),
     }).then((response) => response.json());
 
+    // JIKA ERROR
     if (!res.status) {
       setError(res.message);
     } else {
@@ -166,7 +167,7 @@ const RegisterPage = () => {
             </div>
             <button
               type="submit"
-              className={inter.className}
+              className={`${isLoading && "!cursor-wait"} ${inter.className}`}
               disabled={isLoading}
               style={styles.button}
               onMouseOver={(e) =>

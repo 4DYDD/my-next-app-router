@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import { MySession } from "@/interfaces/mySession";
 
 const Navbar = () => {
   const { data, status } = useSession() as MySession;
+  const [isLoading, setIsLoading] = useState(false);
 
   const pathname = usePathname();
   const { push } = useRouter();
@@ -42,7 +43,8 @@ const Navbar = () => {
               <li key={index}>
                 <Link
                   href={value.href}
-                  className={`hover:text-white transall clicked flexc ${
+                  style={{ animationDelay: `${index * 100}ms` }}
+                  className={`hover:text-white transall clicked flexc animate-squish ${
                     pathname === value.href
                       ? "text-gray-300 font-semibold"
                       : "text-gray-400"
@@ -55,7 +57,7 @@ const Navbar = () => {
 
             {data ? (
               <li>
-                <div className="hover:text-gray-400 transall clicked flexc">
+                <div className="hover:text-gray-400 transall clicked flexc animate-squish">
                   <div className="flexc gap-2 relative">
                     <span className="w-8 flexc relative">
                       <Image
@@ -96,7 +98,11 @@ const Navbar = () => {
               {/*  */}
               {/* ======================================== JIKA LOADING ======================================== */}
               {status === "loading" && (
-                <button className="text-gray-400 transall">Loading...</button>
+                <div
+                  className={`text-gray-400 cursor-wait transall animate-squish`}
+                >
+                  Loading...
+                </div>
               )}
               {/*  */}
               {/*  */}
@@ -112,10 +118,16 @@ const Navbar = () => {
               {/* ======================================== JIKA TERAUTENTIKASI ======================================== */}
               {status === "authenticated" && (
                 <button
-                  onClick={() => signOut()}
-                  className="hover:text-gray-400 transall clicked"
+                  disabled={isLoading}
+                  onClick={() => {
+                    setIsLoading(true);
+                    signOut();
+                  }}
+                  className={`hover:text-gray-400 transall animate-squish ${
+                    !isLoading && "clicked"
+                  } disabled:!cursor-wait`}
                 >
-                  Sign Out
+                  {isLoading ? "Loading..." : "Sign Out"}
                 </button>
               )}
               {/*  */}
@@ -132,10 +144,16 @@ const Navbar = () => {
               {/* ======================================== JIKA TIDAK TERAUTENTIKASI ======================================== */}
               {status === "unauthenticated" && (
                 <button
-                  onClick={() => signIn()}
-                  className="hover:text-gray-400 transall clicked"
+                  disabled={isLoading}
+                  onClick={() => {
+                    setIsLoading(true);
+                    signIn();
+                  }}
+                  className={`hover:text-gray-400 transall animate-squish ${
+                    !isLoading && "clicked"
+                  } disabled:!cursor-wait`}
                 >
-                  Sign In
+                  {isLoading ? "Loading..." : "Sign In"}
                 </button>
               )}
               {/*  */}

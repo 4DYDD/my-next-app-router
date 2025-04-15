@@ -9,7 +9,7 @@ import {
   where,
 } from "firebase/firestore";
 import app from "./init";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 
 const firestore = getFirestore(app);
 
@@ -66,5 +66,29 @@ export async function register(data: {
     } catch (error) {
       return { status: false, statusCode: 400, message: "Register Failed" };
     }
+  }
+}
+
+export async function login({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  const q = query(collection(firestore, "users"), where("email", "==", email));
+
+  const snapshot = await getDocs(q);
+  const user: any = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }))[0];
+
+  if (user) {
+    const passwordConfirm = await compare(password, user.password);
+    if (passwordConfirm) return { ...user, password: null };
+    if (!passwordConfirm) return null;
+  } else {
+    return null;
   }
 }
