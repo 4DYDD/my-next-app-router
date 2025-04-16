@@ -7,4 +7,9 @@ export function mainMiddleware(request: NextRequest) {
 }
 
 // WAJIBKAN AUTHENTIKASI DI PATHNAME BERIKUT
-export default withAuth(mainMiddleware, ["/dashboard", "/settings"]);
+export default withAuth(mainMiddleware, [
+  "/dashboard",
+  "/settings",
+  "/login",
+  "/register",
+]);

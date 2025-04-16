@@ -6,6 +6,7 @@ import {
   getDocs,
   getFirestore,
   query,
+  updateDoc,
   where,
 } from "firebase/firestore";
 import app from "./init";
@@ -34,6 +35,7 @@ export async function register(data: {
   email: string;
   password: string;
   role?: string;
+  type?: string;
 }) {
   //
   //
@@ -71,8 +73,9 @@ export async function register(data: {
   //
   // JIKA TIDAK DUPLIKAT MAKA BUAT ROLENYA JADI MEMBER, LALU ENKRIPSI PASSWORDNYA PAKAI BCRYPT
   else {
-    data.role = "member";
     data.password = await hash(data.password, 10);
+    data.role = "member";
+    data.type = "credentials";
     //
     //
     //
@@ -107,9 +110,39 @@ export async function login({
 
   if (user) {
     const passwordConfirm = await compare(password, user.password);
-    if (passwordConfirm) return { ...user, password: null };
+    if (passwordConfirm)
+      return {
+        email: user.email,
+        fullname: user.fullname,
+        role: user.role,
+        type: user.type || "",
+      };
     if (!passwordConfirm) return null;
   } else {
     return null;
   }
+}
+
+export async function loginWithGoogle(data: any) {
+  const q = query(
+    collection(firestore, "users"),
+    where("email", "==", data.email)
+  );
+
+  const snapshot = await getDocs(q);
+  const user: any = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }))[0];
+
+  if (user) {
+    data.role = user.role;
+    data.type = "google";
+    await updateDoc(doc(firestore, "users", user.id), data);
+  } else {
+    data.role = "member";
+    data.type = "google";
+    await addDoc(collection(firestore, "users"), data);
+  }
+  return data;
 }

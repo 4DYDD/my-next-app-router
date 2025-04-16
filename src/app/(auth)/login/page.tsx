@@ -1,7 +1,7 @@
 "use client";
 
 import Head from "next/head";
-import React, { CSSProperties, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -97,25 +97,35 @@ const LoginPage = ({ searchParams }: any) => {
         redirect: false,
         email: event.currentTarget.email.value,
         password: event.currentTarget.password.value,
-        callbackUrl,
+        callbackUrl: callbackUrl || "/dashboard",
       });
 
       if (!res?.error) {
-        push(callbackUrl);
+        push(callbackUrl || "/dashboard");
         event.target.reset();
       } else {
         setError("Email or Password is Incorrect");
+        setIsLoading(false);
       }
     } catch (error: any) {
       console.log(error);
       setError(error);
-    } finally {
       setIsLoading(false);
     }
   };
 
   const handleSignInWithGoogle = async (event: any) => {
-    alert("fitur Sign In Google belum dibuat!");
+    if (isLoading) return;
+
+    event.preventDefault();
+
+    setError("");
+    setIsLoading(true);
+
+    signIn("google", {
+      redirect: false,
+      callbackUrl,
+    });
   };
 
   return (
@@ -267,6 +277,9 @@ const LoginPage = ({ searchParams }: any) => {
               </>
             )}
           </button>
+
+          <br />
+          <hr className="border rounded-full border-[#3b82f6]" />
 
           <p style={styles.linkText}>
             Belum punya akun?{" "}
