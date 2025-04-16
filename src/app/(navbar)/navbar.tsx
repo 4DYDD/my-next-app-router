@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { MySession } from "@/interfaces/mySession";
 
@@ -12,7 +12,6 @@ const Navbar = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const pathname = usePathname();
-  const { push } = useRouter();
 
   return (
     <>
@@ -27,8 +26,8 @@ const Navbar = () => {
               alt="Logo"
               className="rounded-full w-16"
             />
-            <h1 className="text-lg font-semibold w-20 flexc" id="app-title">
-              My Mine
+            <h1 className="text-lg font-semibold w-28 flexc" id="app-title">
+              My Tokoku
             </h1>
           </div>
 
