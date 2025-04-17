@@ -18,19 +18,12 @@ const ProductsPage = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    getData("http://localhost:3000/api/products")
+    getData(`${process.env.NEXT_PUBLIC_API_URL}/api/products`)
       .then((res) => {
-        if (res.status === 200) {
-          setProducts(res.data);
-        }
+        if (res.status === 200) setProducts(res.data);
       })
-      .catch((error) => {
-        setError(error);
-        console.error("Failed to fetch products : ", error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .catch((error) => setError(error))
+      .finally(() => setIsLoading(false));
   }, []);
 
   if (error) throw new Error(error);

@@ -1,7 +1,7 @@
 "use client";
 
 import Head from "next/head";
-import React, { CSSProperties, useEffect, useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -108,7 +108,6 @@ const LoginPage = ({ searchParams }: any) => {
         setIsLoading(false);
       }
     } catch (error: any) {
-      console.log(error);
       setError(error);
       setIsLoading(false);
     }

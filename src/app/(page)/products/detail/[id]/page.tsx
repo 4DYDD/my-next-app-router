@@ -1,27 +1,32 @@
 import { getData } from "@/services/getData";
 import { DataType } from "@/types/datatype";
+import { toIndonesiaCurrency } from "@/utils/toIndonesiaCurrency";
 import Image from "next/image";
 import React from "react";
 
-const DetailProductPage = async ({ params }: any) => {
+const DetailProductPage = async (props: any) => {
+  const params = await props.params;
   const { data }: { data: DataType } = await getData(
-    "http://localhost:3000/api/products?id=" + params.id
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products?id=${params.id}`
   );
-
-  console.log("\n\n", data);
-  console.log("\n\n");
 
   return (
     <>
-      <div className="container mx-auto my-10">
-        <div>
-          <Image
-            width={592}
-            height={592}
-            src={data.image}
-            alt={data.name}
-            className="w-full object-cover aspect-square col-span-2"
-          />
+      <div className="container mx-auto my-10 p-6 bg-white rounded-lg">
+        <div className={`flexcc`}>
+          <div className={`size-[40rem]`}>
+            <Image
+              width={592}
+              height={592}
+              src={data.image}
+              alt={data.name}
+              className="w-full object-cover aspect-square col-span-2"
+            />
+          </div>
+          <div className="font-bold text-4xl">{data.name}</div>
+          <div className="mt-3 font-bold text-xl">
+            {toIndonesiaCurrency(data.price)}
+          </div>
         </div>
       </div>
     </>

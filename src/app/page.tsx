@@ -1,9 +1,17 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
+  ),
   title: "Home - My Tokoku",
   description: "Website My Tokoku",
-  authors: [{ name: "Somwan", url: "http://localhost:3000" }],
+  authors: [
+    {
+      name: "Somwan",
+      url: `http://localhost:3000`,
+    },
+  ],
   openGraph: {
     title: "Home - My Tokoku",
   },

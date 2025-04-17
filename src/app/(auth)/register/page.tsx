@@ -107,7 +107,6 @@ const RegisterPage = () => {
     }
 
     setIsLoading(false);
-    console.log(res);
   };
 
   return (

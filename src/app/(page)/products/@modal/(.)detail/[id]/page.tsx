@@ -1,17 +1,18 @@
-import Modal from "@/app/components/fragments/Modal";
+// import Modal from "@/app/components/fragments/Modal";
 import { getData } from "@/services/getData";
 import { DataType } from "@/types/datatype";
 import { toIndonesiaCurrency } from "@/utils/toIndonesiaCurrency";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
 
-const DetailProductPage = async ({ params }: any) => {
-  const { data }: { data: DataType } = await getData(
-    "http://localhost:3000/api/products?id=" + params.id
-  );
+const Modal = dynamic(() => import("@/app/components/fragments/Modal"));
 
-  console.log("\n\n", data);
-  console.log("\n\n");
+const DetailProductPage = async (props: any) => {
+  const params = await props.params;
+  const { data }: { data: DataType } = await getData(
+    `${process.env.NEXT_PUBLIC_API_URL}/api/products?id=${params.id}`
+  );
 
   return (
     <>
